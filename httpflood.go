@@ -282,7 +282,7 @@ func main() {
 		var wg sync.WaitGroup
 		wg.Add(threads)
 		for i := 0; i < threads; i++ {
-			time.Sleep(id, time.Microsecond * 100)
+			time.Sleep(i, time.Microsecond * 100)
 			go flood(&wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
