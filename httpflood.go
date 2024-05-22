@@ -218,7 +218,7 @@ func flood(id int, wg * sync.WaitGroup) {
 		}
 		//fmt.Println("Threads@", threads, " Hitting Target -->", url)// For those who like share to skid.
 	}
-
+	fmt.Printf("Finished thread: %d\n", id)
 }
 
 func main() {
