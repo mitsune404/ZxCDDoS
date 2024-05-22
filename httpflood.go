@@ -219,8 +219,9 @@ func flood(wg *sync.WaitGroup) {
 }
 
 func main() {
-	duration := 60
- 	timer := time.After(time.Duration(duration) * time.Minute)
+	duration := 60                                                
+	timer := time.NewTimer(time.Duration(duration) * time.Minute)
+
 	fmt.Println("\r\n'||  ||`   ||      ||                '||''''| '||`                   ||` ")
 	fmt.Println(" ||  ||    ||      ||                 ||  .    ||                    ||  ")
 	fmt.Println(" ||''||  ''||''  ''||''  '||''|, ---  ||''|    ||  .|''|, .|''|, .|''||  ")
@@ -269,24 +270,6 @@ func main() {
 	} else {
 		key = "&"
 	}
-
-	
-
-	// for {
-	// 	var wg sync.WaitGroup
-	// 	wg.Add(threads)
-
-	// 	for i := 0; i < threads; i++ {
-	// 		time.Sleep(time.Microsecond * 100)
-	// 		go flood(wg) // Start threads
-	// 		fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
-	// 		os.Stdout.Sync()
-	// 		//time.Sleep( time.Millisecond * 1)
-	// 	}
-
-	// 	wg.Wait()
-		
-	// }
 
 	
 	for {
