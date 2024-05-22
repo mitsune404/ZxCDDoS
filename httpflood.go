@@ -128,8 +128,10 @@ func contain(char string, x string) int { //simple compare
 	return ans
 }
 
-func flood(wg * sync.WaitGroup) {
+func flood(id int, wg * sync.WaitGroup) {
 	defer wg.Done()
+	fmt.Printf("Current thread: %d\n", id)
+
 	addr := host + ":" + port
 	header := ""
 	if mode == "get" {
@@ -216,6 +218,7 @@ func flood(wg * sync.WaitGroup) {
 		}
 		//fmt.Println("Threads@", threads, " Hitting Target -->", url)// For those who like share to skid.
 	}
+
 }
 
 func main() {
@@ -279,7 +282,7 @@ func main() {
 		wg.Add(threads)
 		for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
-			go flood(&wg) // Start threads
+			go flood(i, &wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		}
