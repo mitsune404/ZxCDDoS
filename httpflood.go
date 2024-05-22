@@ -302,6 +302,7 @@ func main() {
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		 }
+		 fmt.Println("Commencing main function halt")
 		 wg.Wait()
 		 fmt.Println("Session over")
 		}
