@@ -190,8 +190,9 @@ func flood(id int, wg * sync.WaitGroup) {
 	
 	var s net.Conn
 	var err error
-	<-start //received signal
 	fmt.Printf("Finished thread: %d\n", id)
+	<-start //received signal
+	
 	for {
 		if port == "443" {
 			cfg := &tls.Config{
