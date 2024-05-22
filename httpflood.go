@@ -295,7 +295,7 @@ func main() {
 		default:
 		 var wg sync.WaitGroup
 		 wg.Add(threads)
-		 fmt.Println("Commencing new session")
+		 fmt.Printf("Commencing new session")
 		 for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
 			go flood(&wg) // Start threads
@@ -303,7 +303,7 @@ func main() {
 			os.Stdout.Sync()
 		 }
 		 wg.Wait()
-		 fmt.Println("Session over")
+		 fmt.Printf("Session over")
 		}
 	}
 	
