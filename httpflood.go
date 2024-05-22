@@ -11,7 +11,6 @@ As a result, here you are.
 package main
 
 import (
-	"sync"
 	"bufio"
 	"crypto/tls"
 	"fmt"
@@ -272,38 +271,38 @@ func main() {
 
 	
 
-	for {
-		var wg sync.WaitGroup
-		wg.Add(threads)
+	// for {
+	// 	var wg sync.WaitGroup
+	// 	wg.Add(threads)
 
-		for i := 0; i < threads; i++ {
-			time.Sleep(time.Microsecond * 100)
-			go flood(&wg) // Start threads
-			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
-			os.Stdout.Sync()
-			//time.Sleep( time.Millisecond * 1)
-		}
+	// 	for i := 0; i < threads; i++ {
+	// 		time.Sleep(time.Microsecond * 100)
+	// 		go flood(&wg) // Start threads
+	// 		fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
+	// 		os.Stdout.Sync()
+	// 		//time.Sleep( time.Millisecond * 1)
+	// 	}
 
-		wg.Wait()
+	// 	wg.Wait()
 		
-	}
+	// }
 
 	for {
 		select {
 		case <-timer:
 		 return
 		default:
-		 wg := new(sync.WaitGroup)
+		 var wg sync.WaitGroup
 		 wg.Add(threads)
-		 fmt.Printf("Commencing new session")
+		 fmt.Println("Commencing new session")
 		 for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
-			go flood(wg) // Start threads
+			go flood(&wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		 }
 		 wg.Wait()
-		 fmt.Printf("Session over")
+		 fmt.Println("Session over")
 		}
 	}
 	
