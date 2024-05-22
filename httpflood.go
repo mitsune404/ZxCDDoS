@@ -206,7 +206,6 @@ func flood(wg * sync.WaitGroup) {
 			fmt.Println("Connection Down!!!") //When showing this message, it means ur ip got blocked or the target server down.
 			
 		}  else {
-			fmt.Println("Commencing the attack now...")
 			for i := 0; i < 100; i++ {
 				request := ""
 				if os.Args[3] == "get" {
