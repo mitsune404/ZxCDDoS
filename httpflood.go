@@ -223,7 +223,7 @@ func flood(wg * sync.WaitGroup) {
 }
 
 func main() {
-	duration := 60                                                
+	duration := 120                       
 	timer := time.NewTimer(time.Duration(duration) * time.Minute)
 
 	fmt.Println("\r\n'||  ||`   ||      ||                '||''''| '||`                   ||` ")
