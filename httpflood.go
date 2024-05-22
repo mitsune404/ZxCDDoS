@@ -286,6 +286,7 @@ func main() {
 		}
 	  
 		go func() {
+		 fmt.Println("Starting a new thread for waiting")
 		 wg.Wait()
 		 close(done)
 		}()
