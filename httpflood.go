@@ -293,7 +293,7 @@ func main() {
 		case <-timer:
 		 return
 		default:
-		 var wg sync.WaitGroup
+		 wg := new(sync.WaitGroup)
 		 wg.Add(threads)
 		 fmt.Printf("Commencing new session")
 		 for i := 0; i < threads; i++ {
