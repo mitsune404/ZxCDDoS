@@ -128,7 +128,7 @@ func contain(char string, x string) int { //simple compare
 	return ans
 }
 
-func flood(wg *sync.WaitGroup) {
+func flood(wg * sync.WaitGroup) {
 	defer wg.Done()
 	addr := host + ":" + port
 	header := ""
@@ -276,16 +276,20 @@ func main() {
 	for {
 		// done := make(chan struct{})
 		var wg sync.WaitGroup
-		
+		wg.Add(threads)
 		for i := 0; i < threads; i++ {
-			wg.Add(1)
 			time.Sleep(time.Microsecond * 100)
-			go flood(wg) // Start threads
+			go flood(&wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		}
+
 	  
-		// go func() {
+		// go func() {		// go func() {
+		//  fmt.Println("Starting a new thread for waiting")
+		//  wg.Wait()
+		//  close(done)
+		// }()
 		//  fmt.Println("Starting a new thread for waiting")
 		//  wg.Wait()
 		//  close(done)
