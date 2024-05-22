@@ -298,7 +298,7 @@ func main() {
 		 fmt.Printf("Commencing new session")
 		 for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
-			go flood(&wg) // Start threads
+			go flood(wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
 		 }
