@@ -198,6 +198,7 @@ func flood() {
 		}
 		if err != nil {
 			fmt.Println("Connection Down!!! \nTaking some time off...") //When showing this message, it means ur ip got blocked or the target server down.
+			time.sleep(15 * time.sleep)
 			
 		} // else {
 			fmt.Println("Commencing the attack now...")
