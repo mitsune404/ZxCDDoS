@@ -288,26 +288,34 @@ func main() {
 		
 	// }
 
+	
 	for {
-		select {
-		case <-timer:
-		 return
-		default:
-		 wg := new(sync.WaitGroup)
-		 wg.Add(threads)
-		 fmt.Println("Commencing new session")
-		 for i := 0; i < threads; i++ {
+		done := make(chan struct{})
+	  
+		wg := new(sync.WaitGroup)
+		wg.Add(threads)
+	  
+		for i := 0; i < threads; i++ {
 			time.Sleep(time.Microsecond * 100)
 			go flood(wg) // Start threads
 			fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 			os.Stdout.Sync()
-		 }
-		 fmt.Println("Commencing main function halt")
-		 wg.Wait()
-		 fmt.Println("Session over")
 		}
-	}
-	
+	  
+		go func() {
+		 wg.Wait()
+		 close(done)
+		}()
+	  
+		select {
+		case <-done:
+		 fmt.Println("All goroutines finished successfully")
+		case <-timer.C:
+		 fmt.Println("Timer expired, stopping the loop")
+		 return
+		}
+	   }
+	  
 
 	fmt.Println("Flood will end in " + os.Args[4] + " seconds.")
 	close(start)
