@@ -11,6 +11,7 @@ As a result, here you are.
 package main
 
 import (
+	"sync"
 	"bufio"
 	"crypto/tls"
 	"fmt"
